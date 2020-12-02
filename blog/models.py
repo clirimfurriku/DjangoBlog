@@ -1,13 +1,12 @@
 from django.db import models
-from django.utils import timezone
 
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=256)
     short_description = models.CharField(max_length=1024)
     content = models.TextField()
-    created_date = models.DateTimeField(default=timezone.now())
-    updated_date = models.DateTimeField(default=timezone.now())
+    created_date = models.DateTimeField()
+    updated_date = models.DateTimeField()
     thumbnail_image = models.ImageField(null=True)
 
     def publish(self):
