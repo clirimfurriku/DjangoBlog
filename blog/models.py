@@ -24,7 +24,7 @@ class UserModel(models.Model):
     twitter = models.CharField(max_length=128, null=True, blank=True)
     instagram = models.CharField(max_length=128, null=True, blank=True)
     facebook = models.CharField(max_length=128, null=True, blank=True)
-    avatar = models.ImageField(null=True, blank=True, upload_to='media')  # profile pic
+    avatar = models.ImageField(null=True, blank=True)  # profile pic
 
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -34,21 +34,12 @@ class UserModel(models.Model):
 
 class BlogPost(models.Model):
     title = models.CharField(max_length=256)
-    short_description = models.CharField(max_length=1024)
+    short_description = models.TextField(max_length=1024)
     content = models.TextField()  # TODO: Check if html i supported
-    created_date = models.DateTimeField()
-    updated_date = models.DateTimeField()
-    thumbnail_image = models.ImageField(null=True, blank=True, upload_to='media')
-    author = models.ForeignKey(UserModel, on_delete=models.SET_NULL, null=True)
-
-    def publish(self):
-        self.created_date = timezone.now()
-        self.updated_date = timezone.now()
-        self.save()
-
-    def update(self):
-        self.updated_date = timezone.now()
-        self.save()
+    created_date = models.DateTimeField(default=timezone.now)
+    updated_date = models.DateTimeField(default=timezone.now)
+    thumbnail_image = models.ImageField(null=True, blank=True)
+    author = models.ForeignKey(UserModel, on_delete=models.SET_NULL, null=True, blank=True)
 
     def __str__(self):
         return f'{self.title} {self.updated_date}'
