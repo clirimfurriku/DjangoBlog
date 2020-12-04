@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block titleblock %}
+    Blog Home
+{% endblock %}
+{% block bodyblock %}
+    {% for post in object_list %}
+        <a href="{% url 'post' post.id %}"> {{ post.title }}</a> {{ post.author }}
+        {{ post }}
+    {% endfor %}
+{% endblock %}

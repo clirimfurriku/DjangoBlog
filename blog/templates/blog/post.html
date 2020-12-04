@@ -1,0 +1,8 @@
+{% extends 'base.html' %}
+
+{% block titleblock %}
+    {{ object.title }}
+{% endblock %}
+{% block bodyblock %}
+    {{ object.title }} {{ object.update }} {{ object.author.user.username }}
+{% endblock %}
