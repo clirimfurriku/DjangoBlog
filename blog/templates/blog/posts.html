@@ -1,11 +1,33 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block titleblock %}
     Blog Home
 {% endblock %}
 {% block bodyblock %}
-    {% for post in object_list %}
-        <a href="{% url 'post' post.id %}"> {{ post.title }}</a> {{ post.author }}
-        {{ post }}
-    {% endfor %}
+    <div class="row">
+        {% for post in object_list %}
+            <div class="col s12 m6 l4">
+                <div  class="card">
+                    <div class="card-image">
+                        {% if post.thumbnail_image %}
+                            <img width="300" height="300" src="{{ post.thumbnail_image.url }}">
+                        {% else %}
+                            <img width="300" height="300" src="{% static 'default.jpg' %}">
+                        {% endif %}
+                        <span class="card-title">{{ post.title }}
+                        </span>
+                    </div>
+                    <div class="card-content">
+                        <h6>Published: {{ post.updated_date }} <br>
+                            Author: {{ post.author.user.username }}
+                        </h6><br>
+                        <p>{{ post.short_description }}</p>
+                    </div>
+                    <div class="card-action">
+                        <a href="{% url 'post' post.id %}">Read More</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 {% endblock %}
