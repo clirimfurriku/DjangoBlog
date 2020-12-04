@@ -25,7 +25,7 @@
     <h6>Make a comment</h6>
      <form class="col s12" autocomplete="off" action="{% url 'post' object.id %}" method="POST">
         <div class="row">
-            <div class="input-field col s6">
+            <div class="input-field col s12 m6">
                 <input id="comment" name="comment" type="text">
                 <label class="active" for="comment">Comment</label>
                 {% csrf_token %}
