@@ -1,0 +1,25 @@
+{% load static %}
+<h4>Post comments</h4>
+{% if comments %}
+    <ul class="collection">
+        {% for comment in comments %}
+            <li class="collection-item avatar">
+                {% if comment.author.avatar %}
+                    <img width="50" height="50" src="{{ comment.author.avatar.url }}" alt="{{ comment.author.user.username }}" class="circle">
+                {% else %}
+                    <img src="{% static "avatar.png" %}" alt="" class="circle">
+
+                {% endif %}
+                <span class="title bold">{{ comment.author }} | {{ comment.comment_date }}</span>
+                <p>
+                    {{ comment.comment }}
+                </p>
+            </li>
+        {% endfor %}
+    </ul>
+{% endif %}
+{% if user.is_authenticated %}
+    <h6>Make a comment</h6>
+{% else %}
+    <p>Loggin to make comments.</p>
+{% endif %}

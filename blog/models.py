@@ -29,7 +29,7 @@ class UserModel(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
     def __str__(self):
-        return f'{self.user.first_name} {self.user.last_name}'
+        return f'{self.user.username if self.user else "Unknown"}'
 
 
 class BlogPost(models.Model):
@@ -52,4 +52,4 @@ class UserComment(models.Model):
     comment_date = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.author.user.username} {self.comment_date}'
+        return f'{self.author} {self.comment_date}'

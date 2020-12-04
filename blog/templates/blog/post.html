@@ -1,8 +1,40 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block titleblock %}
     {{ object.title }}
 {% endblock %}
 {% block bodyblock %}
-    {{ object.title }} {{ object.update }} {{ object.author.user.username }}
+    <div class="card">
+        <div class="card-image">
+            {% if object.thumbnail_image %}
+                <img width="300" height="300" src="{{ object.thumbnail_image.url }}">
+            {% else %}
+                <img width="300" height="300" src="{% static 'default.jpg' %}">
+            {% endif %}
+            <span class="card-title">{{ object.title }}</span>
+        </div>
+        <div style="padding: 20px">
+            <ul>
+                <li class="collection-item">
+                    <i class="material-icons tiny">access_time</i>
+                    <span class="title">Published: {{ object.updated_date }}</span>
+                </li>
+                <li class="collection-item">
+                    <i class="material-icons tiny">person</i>
+                    <span class="title">Author: {{ object.author.user.username }}</span>
+                </li>
+            </ul>
+            <hr color="green">
+            {{ object.content }}
+            <br>
+            <br>
+            {% include 'blog/comments.html' with comments=comments%}
+        </div>
+
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var instances = M.Materialbox.init(document.querySelectorAll('.materialboxed'), options);
+        });
+    </script>
 {% endblock %}
