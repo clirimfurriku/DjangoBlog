@@ -5,7 +5,8 @@
         {% for comment in comments %}
             <li class="collection-item avatar">
                 {% if comment.author.avatar %}
-                    <img width="50" height="50" src="{{ comment.author.avatar.url }}" alt="{{ comment.author.user.username }}" class="circle">
+                    <img width="50" height="50" src="{{ comment.author.avatar.url }}"
+                         alt="{{ comment.author.user.username }}" class="circle">
                 {% else %}
                     <img src="{% static "avatar.png" %}" alt="" class="circle">
 
@@ -17,9 +18,21 @@
             </li>
         {% endfor %}
     </ul>
+{% else %}
+    <p>No comments on this post, be the first to comment</p>
 {% endif %}
 {% if user.is_authenticated %}
     <h6>Make a comment</h6>
+     <form class="col s12" autocomplete="off" action="{% url 'post' object.id %}" method="POST">
+        <div class="row">
+            <div class="input-field col s6">
+                <input id="comment" name="comment" type="text">
+                <label class="active" for="comment">Comment</label>
+                {% csrf_token %}
+                <input class="waves-effect waves-light btn" type="submit" name="submit" value="Comment"/>
+            </div>
+        </div>
+    </form>
 {% else %}
-    <p>Loggin to make comments.</p>
+    <a href="#"><p>Login to make comments.</p></a>
 {% endif %}

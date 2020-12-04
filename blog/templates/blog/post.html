@@ -4,12 +4,13 @@
     {{ object.title }}
 {% endblock %}
 {% block bodyblock %}
-    <div class="card">
+    <div class="card hoverable">
         <div class="card-image">
             {% if object.thumbnail_image %}
-                <img width="300" height="300" src="{{ object.thumbnail_image.url }}">
+                <img class="materialboxed" width="300" height="300" src="{{ object.thumbnail_image.url }}"
+                     alt="{{ object.title }}">
             {% else %}
-                <img width="300" height="300" src="{% static 'default.jpg' %}">
+                <img width="300" height="300" src="{% static 'default.jpg' %}" alt="Default post image">
             {% endif %}
             <span class="card-title">{{ object.title }}</span>
         </div>
@@ -28,13 +29,14 @@
             {{ object.content }}
             <br>
             <br>
-            {% include 'blog/comments.html' with comments=comments%}
+            {% include 'blog/comments.html' with comments=comments %}
         </div>
 
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            var instances = M.Materialbox.init(document.querySelectorAll('.materialboxed'), options);
+            var elems = document.querySelectorAll('.materialboxed');
+            var instances = M.Materialbox.init(elems);
         });
     </script>
 {% endblock %}
