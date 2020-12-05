@@ -8,6 +8,7 @@ urlpatterns = [
     path('blog/<int:pk>', blog_views.BlogPostDetailView.as_view(), name="post"),
     path('author/<int:pk>', blog_views.AuthorPostsView.as_view(), name="author"),
     path('bloggers/', blog_views.BloggersList.as_view(), name="bloggers"),
+    path('account/', blog_views.MyAccount.as_view(), name="account"),
     path('account/login/', blog_views.UserLoginView.as_view(), name="login"),
     path('account/logout/', blog_views.UserLogoutView.as_view(), name="logout"),
     path('account/signup/', blog_views.UserSignUpView.as_view(), name="signup"),
