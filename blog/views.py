@@ -9,6 +9,21 @@ class BlogPostsView(ListView):
     template_name = "blog/posts.html"
 
 
+class AuthorPostsView(DetailView):
+    model = UserModel
+    template_name = 'blog/user_posts.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Only moderators or authors can have a articles page
+        this_user = context['object']
+        if this_user.user_type == 'm' or this_user.user_type == 'a':
+            user_posts = BlogPost.objects.filter(author=this_user)
+            context['posts'] = user_posts
+
+        return context
+
+
 class BlogPostDetailView(DetailView):
     model = BlogPost
     template_name = "blog/post.html"

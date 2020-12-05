@@ -12,7 +12,7 @@ class UserModel(models.Model):
     user_type = models.CharField(
         max_length=1,
         choices=(
-            ('m', 'Author'),
+            ('m', 'Moderator'),
             ('a', 'Author'),
             ('r', 'Reader')
         ),
@@ -26,7 +26,7 @@ class UserModel(models.Model):
     facebook = models.CharField(max_length=128, null=True, blank=True)
     avatar = models.ImageField(null=True, blank=True)  # profile pic
 
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(User, on_delete=models.SET_NULL, null=True)
 
     def __str__(self):
         return f'{self.user.username if self.user else "Unknown"}'

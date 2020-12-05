@@ -12,7 +12,7 @@
         </div>
         <div class="card-stacked">
             <div class="card-content">
-                <p>{{ author.user.username }}</p>
+                <a href="{% url 'author' author.id %}"><p>{{ author.user.username }}</p></a>
                 <p>{{ author.bio }}</p>
                 <br>
                 <div class="col">
@@ -29,9 +29,11 @@
                     </div>
                 </div>
             </div>
-            <div class="card-action">
-                <a href="#">More posts</a>
-            </div>
+            {% if more %}
+                <div class="card-action">
+                    <a href="{% url 'author' author.id %}"><p>More Posts</p></a>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>

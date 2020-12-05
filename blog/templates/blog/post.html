@@ -29,7 +29,7 @@
             {{ object.content }}
             <br>
             {% if object.author %}
-                {% include "blog/about_author.html" with author=object.author %}
+                {% include "blog/about_author.html" with author=object.author more=True %}
             {% endif %}
             <br>
             {% include 'blog/comments.html' with comments=comments %}
