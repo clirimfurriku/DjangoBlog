@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleblock %}
+    All authors
+{% endblock %}
+{% block bodyblock %}
+    <div class="card hoverable">
+         {% for author in object_list %}
+            {% include "blog/about_author.html" with more=True %}
+    {% endfor %}
+        </div>
+{% endblock %}

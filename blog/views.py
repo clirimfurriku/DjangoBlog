@@ -1,3 +1,4 @@
+from django.db.models import Q
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView
 
@@ -75,3 +76,13 @@ class BlogPostDetailView(DetailView):
         if comments:
             context['comments'] = comments
         return context
+
+
+class BloggersList(ListView):
+    model = UserModel
+    template_name = 'blog/authors.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        moderator_or_author = Q(user_type__exact='m') | Q(user_type__exact='a')
+        return queryset.filter(moderator_or_author)
