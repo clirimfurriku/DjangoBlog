@@ -1,7 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, FormView
-from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LoginView, LogoutView
 
 from blog.forms import UserSignupForm, SignUpInfoForm
 from blog.models import BlogPost, UserComment, UserModel
@@ -91,7 +91,7 @@ class BloggersList(ListView):
 
 
 class UserLoginView(LoginView):
-    template_name = 'blog/login.html'
+    template_name = 'blog/account/login.html'
 
     def get(self, request, **kwargs):
         # If user already logged in redirect home
@@ -100,7 +100,12 @@ class UserLoginView(LoginView):
         return super().get(request)
 
 
+class UserLogoutView(LogoutView):
+    template_name = 'blog/account/logout.html'
+
+
+
 class UserSignUpView(FormView):
-    template_name = 'blog/signup.html'
+    template_name = 'blog/account/signup.html'
     success_url = '/'
     form_class = UserSignupForm

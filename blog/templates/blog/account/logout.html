@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block titleblock %}
+    Logged out
+{% endblock %}
+{% block bodyblock %}
+    <div class="card hoverable" style="padding: 20px">
+        <p>{% trans "Thank you for being part of this blog. You have successfuly logged out" %}</p>
+
+        <p><a href="{% url 'login' %}">{% trans 'Log in again' %}</a></p>
+    </div>
+{% endblock %}
