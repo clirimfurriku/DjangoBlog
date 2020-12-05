@@ -1,15 +1,16 @@
 from django.db.models import Q
 from django.shortcuts import redirect
-from django.views.generic import ListView, DetailView
+from django.views.generic import ListView, DetailView, FormView
 from django.contrib.auth.views import LoginView
 
+from blog.forms import UserSignupForm, SignUpInfoForm
 from blog.models import BlogPost, UserComment, UserModel
 
 
 class BlogPostsView(ListView):
     model = BlogPost
     template_name = "blog/posts.html"
-    paginate_by = 5
+    paginate_by = 6
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -97,3 +98,9 @@ class UserLoginView(LoginView):
         if request.user.is_authenticated:
             return redirect('home')
         return super().get(request)
+
+
+class UserSignUpView(FormView):
+    template_name = 'blog/signup.html'
+    success_url = '/'
+    form_class = UserSignupForm

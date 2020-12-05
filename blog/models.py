@@ -9,13 +9,14 @@ class UserModel(models.Model):
     # 1 - Moderator (Can publish articles, edit, comment)
     # 2 - Authors (Can publish articles, comment)
     # 3 - Reader (Can comment on articles)
-    user_type = models.CharField(
-        max_length=1,
-        choices=(
+    USER_CHOICES = (
             ('m', 'Moderator'),
             ('a', 'Author'),
             ('r', 'Reader')
-        ),
+        )
+    user_type = models.CharField(
+        max_length=1,
+        choices=USER_CHOICES,
         null=True,
         blank=True
     )

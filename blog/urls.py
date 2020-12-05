@@ -1,12 +1,13 @@
 from django.urls import path
-from blog.views import BlogPostsView, BlogPostDetailView, AuthorPostsView, BloggersList, UserLoginView
+from blog import views
 
 
 urlpatterns = [
-    path('', BlogPostsView.as_view(), name="home"),
-    path('blog/', BlogPostsView.as_view(), name="homeblog"),
-    path('blog/<int:pk>', BlogPostDetailView.as_view(), name="post"),
-    path('author/<int:pk>', AuthorPostsView.as_view(), name="author"),
-    path('bloggers/', BloggersList.as_view(), name="bloggers"),
-    path('account/login/', UserLoginView.as_view(), name="login"),
+    path('', views.BlogPostsView.as_view(), name="home"),
+    path('blog/', views.BlogPostsView.as_view(), name="homeblog"),
+    path('blog/<int:pk>', views.BlogPostDetailView.as_view(), name="post"),
+    path('author/<int:pk>', views.AuthorPostsView.as_view(), name="author"),
+    path('bloggers/', views.BloggersList.as_view(), name="bloggers"),
+    path('account/login/', views.UserLoginView.as_view(), name="login"),
+    path('account/signup/', views.UserSignUpView.as_view(), name="login"),
 ]
