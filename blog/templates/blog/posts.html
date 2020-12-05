@@ -37,5 +37,36 @@
                 </div>
             </div>
         {% endfor %}
+
+    </div>
+    <div class="row">
+        <ul class="pagination">
+            {% if page_obj.has_previous %}
+                <li class="waves-effect">
+                    <a href="?page={{ page_obj.previous_page_number }}">
+                        <i class="material-icons">chevron_left</i>
+                    </a>
+                </li>
+            {% endif %}
+
+            {% if pages|length > 0 %}
+                {% for i in pages %}
+                    {% if i == page_obj.number %}
+                        <li class="disabled"><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% else %}
+                        <li class="waves-effect"><a href="?page={{ i }}">{{ i }}</a></li>
+
+                    {% endif %}
+                {% endfor %}
+            {% endif %}
+
+            {% if page_obj.has_next %}
+                <li class="waves-effect">
+                    <a href="?page={{ page_obj.next_page_number }}">
+                        <i class="material-icons">chevron_right</i>
+                    </a>
+                </li>
+            {% endif %}
+        </ul>
     </div>
 {% endblock %}

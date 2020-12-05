@@ -7,6 +7,24 @@ from blog.models import BlogPost, UserComment, UserModel
 class BlogPostsView(ListView):
     model = BlogPost
     template_name = "blog/posts.html"
+    paginate_by = 5
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        pagination = context['page_obj']
+        pages = []
+
+        # Create a list of max 3 pages right and 3 pages left from the
+        # current page and pas it to template as context argument
+        for i in range(
+                pagination.number - 3
+                if pagination.number - 3 > 0 else 1,
+                pagination.number + 3
+                if pagination.number + 3 <= pagination.paginator.num_pages else pagination.paginator.num_pages + 1):
+            pages.append(i)
+
+        context['pages'] = pages
+        return context
 
 
 class AuthorPostsView(DetailView):
