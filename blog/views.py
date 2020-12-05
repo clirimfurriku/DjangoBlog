@@ -104,7 +104,6 @@ class UserLogoutView(LogoutView):
     template_name = 'blog/account/logout.html'
 
 
-
 class UserSignUpView(FormView):
     template_name = 'blog/account/signup.html'
     success_url = '/'
