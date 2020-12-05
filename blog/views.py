@@ -1,6 +1,7 @@
 from django.db.models import Q
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView
+from django.contrib.auth.views import LoginView
 
 from blog.models import BlogPost, UserComment, UserModel
 
@@ -86,3 +87,13 @@ class BloggersList(ListView):
         queryset = super().get_queryset()
         moderator_or_author = Q(user_type__exact='m') | Q(user_type__exact='a')
         return queryset.filter(moderator_or_author)
+
+
+class UserLoginView(LoginView):
+    template_name = 'blog/login.html'
+
+    def get(self, request, **kwargs):
+        # If user already logged in redirect home
+        if request.user.is_authenticated:
+            return redirect('home')
+        return super().get(request)
