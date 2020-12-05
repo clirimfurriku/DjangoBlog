@@ -41,6 +41,9 @@ class BlogPost(models.Model):
     thumbnail_image = models.ImageField(null=True, blank=True)
     author = models.ForeignKey(UserModel, on_delete=models.SET_NULL, null=True, blank=True)
 
+    class Meta:
+        ordering = ['-created_date']
+
     def __str__(self):
         return f'{self.title} {self.updated_date}'
 
