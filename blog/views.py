@@ -1,9 +1,10 @@
+from django.contrib.auth import login
+from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Q
 from django.shortcuts import redirect
-from django.views.generic import ListView, DetailView, FormView
-from django.contrib.auth.views import LoginView, LogoutView
+from django.views.generic import ListView, DetailView, CreateView
 
-from blog.forms import UserSignupForm, SignUpInfoForm
+from blog.forms import SignUpForm
 from blog.models import BlogPost, UserComment, UserModel
 
 
@@ -114,14 +115,28 @@ class UserLoginView(LoginView):
         # If user already logged in redirect home
         if request.user.is_authenticated:
             return redirect('home')
-        return super().get(request)
+        return super().get(request, **kwargs)
 
 
 class UserLogoutView(LogoutView):
     template_name = 'blog/account/logout.html'
 
 
-class UserSignUpView(FormView):
+class UserSignUpView(CreateView):
     template_name = 'blog/account/signup.html'
     success_url = '/'
-    form_class = UserSignupForm
+    form_class = SignUpForm
+
+    def get(self, request, *args, **kwargs):
+        if request.user.is_authenticated:
+            return redirect('home')
+        return super(UserSignUpView, self).get(self, request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        form = self.get_form()
+        if form.is_valid():
+            self.object = form.save()
+            login(request, self.object)
+            return redirect('home')
+        else:
+            return self.form_invalid(form)

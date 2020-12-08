@@ -6,7 +6,7 @@
             <li class="collection-item avatar">
                 {% if comment.author.avatar %}
                     <img width="50" height="50" src="{{ comment.author.avatar.url }}"
-                         alt="{{ comment.author.user.username }}" class="circle">
+                         alt="{{ comment.author.username }}" class="circle">
                 {% else %}
                     <img src="{% static "avatar.png" %}" alt="" class="circle">
 
