@@ -30,10 +30,10 @@
             <br>
             <h2 class="header">About author</h2>
             {% if object.author %}
-                {% include "blog/about_author.html" with author=object.author more=True %}
+                {% include "blog/components/about_author.html" with author=object.author more=True %}
             {% endif %}
             <br>
-            {% include 'blog/comments.html' with comments=comments %}
+            {% include 'blog/components/comments.html' with comments=comments %}
         </div>
     </div>
     <script>

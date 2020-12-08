@@ -41,7 +41,7 @@ class Migration(migrations.Migration):
                 ('id', models.AutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('title', models.CharField(max_length=256)),
                 ('short_description', models.TextField(max_length=1024)),
-                ('content', models.TextField()),
+                ('components', models.TextField()),
                 ('created_date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_date', models.DateTimeField(default=django.utils.timezone.now)),
                 ('thumbnail_image', models.ImageField(blank=True, null=True, upload_to='')),

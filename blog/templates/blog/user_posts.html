@@ -6,7 +6,7 @@
 {% block bodyblock %}
     <div>
         <h2 class="header">About author</h2>
-        {% include 'blog/about_author.html' with author=object %}
+        {% include 'blog/components/about_author.html' with author=object %}
     </div>
     <div class="row">
         <h5>Posts from {{ object.user.username }}</h5>

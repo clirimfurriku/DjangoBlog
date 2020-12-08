@@ -1,10 +1,12 @@
 from django.contrib.auth import login
 from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Q
+from django.http import Http404
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView, CreateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
-from blog.forms import SignUpForm
+from blog.forms import SignUpForm, PostForm
 from blog.models import BlogPost, UserComment, UserModel
 
 
@@ -48,7 +50,7 @@ class AuthorPostsView(DetailView):
 
 class BlogPostDetailView(DetailView):
     model = BlogPost
-    template_name = "blog/post.html"
+    template_name = "blog/components/post.html"
 
     def post(self, request, *args, **kwargs):
         """
@@ -70,12 +72,12 @@ class BlogPostDetailView(DetailView):
             comment = self.request.POST.get('comment')
             if comment is not None:
                 new_comment = UserComment(
-                    author=UserModel.objects.get(user=kwargs.get('request').user),
+                    author=self.request.user,
                     blog_post=self.object,
                     comment=comment
                 )
                 new_comment.save()
-        comments = UserComment.objects.filter(blog_post=context.get('object'))
+        comments = UserComment.objects.filter(blog_post=self.object)
         if comments:
             context['comments'] = comments
         return context
@@ -96,7 +98,7 @@ class MyAccount(DetailView):
     template_name = 'blog/account/account.html'
 
     def get_object(self, queryset=None):
-        return UserModel.objects.get(user=self.request.user)
+        return self.request.user
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -137,6 +139,32 @@ class UserSignUpView(CreateView):
         if form.is_valid():
             self.object = form.save()
             login(request, self.object)
+            return redirect('home')
+        else:
+            return self.form_invalid(form)
+
+
+class MakePostView(LoginRequiredMixin, CreateView):
+    template_name = 'blog/account/post.html'
+    success_url = '/'
+    form_class = PostForm
+
+    def get(self, request, *args, **kwargs):
+        if not request.user.is_authenticated or request.user.user_type == 'r':
+            # Only logged in Authors and Moderators can post
+            raise Http404("Page not found")
+        return super(MakePostView, self).get(self, request, *args, **kwargs)
+
+    def post(self, request, *args, **kwargs):
+        if not request.user.is_authenticated or request.user.user_type == 'r':
+            # Only logged in Authors and Moderators can post
+            raise Http404("Page not found")
+
+        form = self.get_form()
+        if form.is_valid():
+            self.object = form.save()
+            self.object.author = request.user
+            self.object.save()
             return redirect('home')
         else:
             return self.form_invalid(form)

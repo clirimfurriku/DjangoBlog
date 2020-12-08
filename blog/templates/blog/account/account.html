@@ -8,6 +8,6 @@
         {% include 'blog/account/account_blogger.html' %}
     {% else %}
         <h2 class="header">About Me</h2>
-        {% include 'blog/about_author.html' with author=object %}
+        {% include 'blog/components/about_author.html' with author=object %}
     {% endif %}
 {% endblock %}

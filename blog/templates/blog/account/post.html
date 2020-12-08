@@ -12,14 +12,12 @@
         <form enctype="multipart/form-data" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input class="waves-effect waves-light btn" type="submit" value="SignUp">
+            <input class="waves-effect waves-light btn" type="submit" value="Post">
 
         </form>
     </div>
     <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var elems = document.querySelectorAll('select');
-            var instances = M.FormSelect.init(elems);
-        });
+        var elems = document.querySelectorAll('textarea');
+        M.textareaAutoResize(elems[0]);
     </script>
 {% endblock %}

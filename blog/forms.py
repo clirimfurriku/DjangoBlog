@@ -1,7 +1,7 @@
 from django.contrib.auth.forms import UserCreationForm
-from django.forms import ChoiceField
+from django.forms import ChoiceField, ModelForm
 
-from blog.models import UserModel
+from blog.models import UserModel, BlogPost
 
 
 class SignUpForm(UserCreationForm):
@@ -17,3 +17,14 @@ class SignUpForm(UserCreationForm):
         super().__init__(*args, **kwargs)
         self.fields['username'].label = 'Username'
         self.fields['email'].labell = 'Email Address'
+
+
+class PostForm(ModelForm):
+    class Meta:
+        model = BlogPost
+        fields = (
+            'title',
+            'short_description',
+            'content',
+            'thumbnail_image',
+        )
