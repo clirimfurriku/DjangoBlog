@@ -58,11 +58,10 @@ class BlogPostDetailView(DetailView):
         DetailView does not include this by default
         """
         self.object = self.get_object()
-        context = self.get_context_data(request=request, object=self.object)
-        if request.method == "POST":
-            # Prevent user resubmit comment by refreshing the page
-            return redirect(request.path)
-        return self.render_to_response(context)
+        self.get_context_data(request=request, object=self.object)
+
+        # Prevent user resubmit comment by refreshing the page
+        return redirect(request.path)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -98,6 +97,8 @@ class MyAccount(DetailView):
     template_name = 'blog/account/account.html'
 
     def get_object(self, queryset=None):
+        if not self.request.user.is_authenticated:
+            raise Http404()
         return self.request.user
 
     def get_context_data(self, **kwargs):
