@@ -25,12 +25,13 @@
 <div style="padding: 20px">
     {% block bodyblock %}
     {% endblock %}
-    <script>
-        document.addEventListener('DOMContentLoaded', function () {
-            var elems = document.querySelectorAll('.sidenav');
-            var instances = M.Sidenav.init(elems);
-        });
-    </script>
 </div>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems);
+    });
+</script>
+{% include 'footer.html' %}
 </body>
 </html>
