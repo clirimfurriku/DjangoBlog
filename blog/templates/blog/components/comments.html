@@ -30,7 +30,11 @@
                 <input id="comment" name="comment" type="text">
                 <label class="active" for="comment">Comment</label>
                 {% csrf_token %}
-                <input class="waves-effect waves-light btn" type="submit" name="submit" value="Comment"/>
+                <div>
+                    <i class="waves-effect waves-light btn blue waves-input-wrapper">
+                        <input class="waves-button-input" type="submit" value="Comment" style="color: white">
+                    </i>
+                </div>
             </div>
         </div>
     </form>

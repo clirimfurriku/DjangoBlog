@@ -35,11 +35,15 @@
                 </div>
                 <br>
                 <div class="row">
-                    <input class="waves-effect waves-light btn" type="submit" value="login">
+                    <div>
+                        <i class="waves-effect waves-light btn blue waves-input-wrapper">
+                            <input class="waves-button-input" type="submit" value="login" style="color: white">
+                        </i>
+                    </div>
                 </div>
                 <input type="hidden" name="next" value="{{ next }}">
             </div>
         </form>
-{#     <p><a href="{% url 'password_reset' %}">Lost password?</a></p>#}
+        {#     <p><a href="{% url 'password_reset' %}">Lost password?</a></p>#}
     </div>
 {% endblock %}

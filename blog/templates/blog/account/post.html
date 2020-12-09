@@ -12,7 +12,11 @@
         <form enctype="multipart/form-data" method="post">
             {% csrf_token %}
             {{ form.as_p }}
-            <input class="waves-effect waves-light btn" type="submit" value="Post">
+            <div>
+                <i class="waves-effect waves-light btn blue waves-input-wrapper">
+                    <input class="waves-button-input" type="submit" value="Post" style="color: white">
+                </i>
+            </div>
 
         </form>
     </div>
