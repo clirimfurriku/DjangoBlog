@@ -3,7 +3,7 @@ from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect
-from django.views.generic import ListView, DetailView, CreateView
+from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from blog.forms import SignUpForm, PostForm
@@ -169,3 +169,15 @@ class MakePostView(LoginRequiredMixin, CreateView):
             return redirect('home')
         else:
             return self.form_invalid(form)
+
+
+class UpdateProfile(UpdateView):
+    model = UserModel
+    fields = ['bio', 'twitter', 'instagram', 'facebook', 'avatar']
+    template_name = 'blog/account/update_profile.html'
+    success_url = '/account'
+
+    def get_object(self, queryset=None):
+        if not self.request.user.is_authenticated:
+            raise Http404()
+        return self.request.user

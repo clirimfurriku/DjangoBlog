@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block titleblock %}
+    Login
+{% endblock %}
+{% block bodyblock %}
+    <div class="card hoverable" style="padding: 20px">
+        {% if form.errors %}
+            <h5>{{ form.errors }}</h5>
+            <br>
+        {% endif %}
+        <form enctype="multipart/form-data" method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <div>
+                <i class="waves-effect waves-light btn blue waves-input-wrapper">
+                    <input class="waves-button-input" type="submit" value="Update" style="color: white">
+                </i>
+            </div>
+        </form>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+    </script>
+{% endblock %}

@@ -10,6 +10,7 @@ urlpatterns = [
     path('bloggers/', blog_views.BloggersList.as_view(), name="bloggers"),
     path('account/', blog_views.MyAccount.as_view(), name="account"),
     path('account/post/', blog_views.MakePostView.as_view(), name="newpost"),
+    path('account/edit/', blog_views.UpdateProfile.as_view(), name="updateprofile"),
     path('account/login/', blog_views.UserLoginView.as_view(), name="login"),
     path('account/logout/', blog_views.UserLogoutView.as_view(), name="logout"),
     path('account/signup/', blog_views.UserSignUpView.as_view(), name="signup"),
