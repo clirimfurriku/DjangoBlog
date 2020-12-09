@@ -35,7 +35,7 @@ class BlogPostsView(ListView):
 
 class AuthorPostsView(DetailView):
     model = UserModel
-    template_name = 'blog/user_posts.html'
+    template_name = 'blog/components/user_posts.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -50,7 +50,7 @@ class AuthorPostsView(DetailView):
 
 class BlogPostDetailView(DetailView):
     model = BlogPost
-    template_name = "blog/components/post.html"
+    template_name = "blog/single_post.html"
 
     def post(self, request, *args, **kwargs):
         """

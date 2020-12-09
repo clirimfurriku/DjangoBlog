@@ -8,36 +8,5 @@
         <h4>My posts</h4>
         <a class="waves-effect waves-light btn-large" href="{% url 'newpost' %}"><i class="material-icons left">add_circle_outline</i>New Post</a>
     </div>
-    {% for post in posts %}
-        <div class="col s12 m6 l4">
-            <div class="card hoverable">
-                <div class="card-image">
-                    {% if post.thumbnail_image %}
-                        <img width="300" height="300" src="{{ post.thumbnail_image.url }}">
-                    {% else %}
-                        <img width="300" height="300" src="{% static 'default.jpg' %}">
-                    {% endif %}
-                    <span class="card-title">{{ post.title }}
-                        </span>
-                </div>
-                <div class="card-content">
-                    <ul>
-                        <li class="collection-item">
-                            <i class="material-icons tiny">access_time</i>
-                            <span class="title">Published: {{ post.updated_date }}</span>
-                        </li>
-                        <li class="collection-item">
-                            <i class="material-icons tiny">person</i>
-                            <span class="title">Author: {{ post.author.user.username }}</span>
-                        </li>
-                    </ul>
-                    <br>
-                    <p class="truncate">{{ post.short_description }}</p>
-                </div>
-                <div class="card-action">
-                    <a href="{% url 'post' post.id %}">Read More</a>
-                </div>
-            </div>
-        </div>
-    {% endfor %}
+    {% include "blog/components/post_card.html" %}
 </div>

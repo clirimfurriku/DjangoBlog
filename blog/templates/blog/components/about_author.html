@@ -3,10 +3,9 @@
     <div class="card horizontal">
         <div class="card-image" style="padding: 20px">
             {% if author.avatar %}
-                <img width="100" height="100" src="{{ author.avatar.url }}"
-                     alt="{{ author.author }}" class="circle">
+                <img style="width: 150px; height: auto; max-height: 150px; border-radius: 50%" src="{{ author.avatar.url }}" alt="Profile picture of {{ author.author }}" class="circle">
             {% else %}
-                <img width="100" height="100" src="{% static "avatar.png" %}" alt="" class="circle">
+                <img style="width: 150px; height: auto" src="{% static "avatar.png" %}" alt="" class="circle">
             {% endif %}
         </div>
         <div class="card-stacked">
@@ -14,16 +13,16 @@
                 <a href="{% url 'author' author.id %}"><h5>{{ author.username }}</h5></a>
                 <p>{{ author.bio }}</p>
                 <br>
-                <div class="col">
+                <div class="col" style="padding-left: 10px">
                     <div class="row">
                         {% if author.facebook %}
-                            <a href="{{ author.facebook }}"><i class="fab fa-facebook-f"></i></a>
+                            <a href="{{ author.facebook }}" target="_blank"><i class="fab fa-facebook-f"></i></a>
                         {% endif %}
                         {% if author.instagram %}
-                            <a href="{{ author.instagram }}"><i class="fab fa-instagram"></i></a>
+                            <a href="{{ author.instagram }}" target="_blank"><i class="fab fa-instagram"></i></a>
                         {% endif %}
                         {% if author.twitter %}
-                            <a href="{{ author.twitter }}"><i class="fab fa-twitter"></i></a>
+                            <a href="{{ author.twitter }}" target="_blank"><i class="fab fa-twitter"></i></a>
                         {% endif %}
                     </div>
                 </div>

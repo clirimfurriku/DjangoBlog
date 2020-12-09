@@ -5,13 +5,14 @@
         {% for comment in comments %}
             <li class="collection-item avatar">
                 {% if comment.author.avatar %}
-                    <img width="50" height="50" src="{{ comment.author.avatar.url }}"
+                    <img height="50" src="{{ comment.author.avatar.url }}"
                          alt="{{ comment.author.username }}" class="circle">
                 {% else %}
-                    <img src="{% static "avatar.png" %}" alt="" class="circle">
+                    <img height="50" src="{% static "avatar.png" %}" alt="" class="circle">
 
                 {% endif %}
                 <span class="title bold">{{ comment.author }} | {{ comment.comment_date }}</span>
+                <hr>
                 <p>
                     {{ comment.comment }}
                 </p>
@@ -23,7 +24,7 @@
 {% endif %}
 {% if user.is_authenticated %}
     <h6>Make a comment</h6>
-     <form class="col s12" autocomplete="off" action="{% url 'post' object.id %}" method="POST">
+    <form class="col s12" autocomplete="off" action="{% url 'post' object.id %}" method="POST">
         <div class="row">
             <div class="input-field col s12 m6">
                 <input id="comment" name="comment" type="text">

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleblock %}
+    Author {{ object.user.username }}
+{% endblock %}
+{% block bodyblock %}
+    <div>
+        <h2 class="header">About author</h2>
+        {% include 'blog/components/about_author.html' with author=object %}
+    </div>
+    <div class="row">
+        <h5>Posts from {{ object.username }}</h5>
+        {% include 'blog/components/post_card.html' %}
+    </div>
+{% endblock %}
