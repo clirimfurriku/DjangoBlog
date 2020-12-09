@@ -4,6 +4,9 @@
     My account
 {% endblock %}
 {% block bodyblock %}
+    <div class="col">
+        <a class="waves-effect waves-light btn blue" href="{% url 'password_change' %}">Change Password</a>
+    </div>
     {% if object.user_type == 'm' or object.user_type == 'a' %}
         {% include 'blog/account/account_blogger.html' %}
     {% else %}
