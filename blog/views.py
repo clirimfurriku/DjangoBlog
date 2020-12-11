@@ -70,7 +70,7 @@ class BlogPostDetailView(DetailView):
             # If it is a post request check if there is a comment field
             # for current user and add it to the db
             comment = self.request.POST.get('comment')
-            if comment is not None:
+            if comment:
                 new_comment = UserComment(
                     author=self.request.user,
                     blog_post=self.object,
