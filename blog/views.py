@@ -44,7 +44,8 @@ class AuthorPostsView(DetailView):
         if this_user.user_type == 'm' or this_user.user_type == 'a':
             user_posts = BlogPost.objects.filter(author=this_user)
             context['posts'] = user_posts
-
+        else:
+            raise Http404()
         return context
 
 
