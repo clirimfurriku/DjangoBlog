@@ -1,0 +1,2 @@
+title, short_description, content, created_date, updated_date, thumbnail_image, author
+Test Post from CSV,This is a short test post imported from CSV, Welcome to the blog this is a test post imported using CSV importer,2020-12-11 12:12,2020-12-11 12:12,https://www.albaniandf.org/wp-content/uploads/2019/03/2019-03-12-2.jpg,admincsv
