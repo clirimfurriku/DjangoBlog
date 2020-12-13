@@ -32,7 +32,7 @@ def run():
         for i, row in enumerate(csv_data):
             if i != 0 and len(row) == 7:
                 has_thumbnail = False
-                # image_path = ''
+
                 image = get_image(row[5].strip())
                 if image:
                     url = parse.urlsplit(row[5].strip())
@@ -40,7 +40,9 @@ def run():
                     with open(image_path, 'wb') as image_file:
                         image_file.write(image)
                         has_thumbnail = True
-                user, _ = UserModel.objects.get_or_create(username=row[6])
+                user, created = UserModel.objects.get_or_create(username=row[6])
+                if created:
+                    user.user_type = 'a'
                 to_import_list.append(
                     BlogPost(
                         title=row[0],
