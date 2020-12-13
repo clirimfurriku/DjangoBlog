@@ -50,11 +50,9 @@ class UserModel(AbstractBaseUser):
     REQUIRED_FIELDS = ['email', 'user_type']
 
     # There will be three types of users:
-    # 1 - Moderator (Can publish articles, edit, comment)
-    # 2 - Authors (Can publish articles, comment)
-    # 3 - Reader (Can comment on articles)
+    # 1 - Authors (Can publish articles, comment)
+    # 2 - Reader (Can comment on articles)
     USER_CHOICES = (
-        ('m', 'Moderator'),
         ('a', 'Author'),
         ('r', 'Reader')
     )
@@ -79,6 +77,11 @@ class UserModel(AbstractBaseUser):
         # Simplest possible answer: Yes, always
         return True
 
+    @property
+    def can_post(self):
+        """Only authors can post"""
+        return self.user_type == 'a'
+
     def has_module_perms(self, app_label):
         """Does the user have permissions to view the app `app_label`?"""
         # Simplest possible answer: Yes, always
@@ -94,7 +97,7 @@ class UserModel(AbstractBaseUser):
 class BlogPost(models.Model):
     title = models.CharField(max_length=256)
     short_description = models.TextField(max_length=1024)
-    content = models.TextField()  # TODO: Check if html i supported
+    content = models.TextField()
     created_date = models.DateTimeField(default=timezone.now)
     updated_date = models.DateTimeField(default=timezone.now)
     thumbnail_image = models.ImageField(null=True, blank=True)

@@ -39,10 +39,8 @@ class AuthorPostsView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        # Only moderators or authors can have a articles page
-        this_user = self.object
-        if this_user.user_type == 'm' or this_user.user_type == 'a':
-            user_posts = BlogPost.objects.filter(author=this_user)
+        if self.object.can_post:
+            user_posts = BlogPost.objects.filter(author=self.object)
             context['posts'] = user_posts
         else:
             raise Http404()
@@ -89,7 +87,7 @@ class BloggersList(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        moderator_or_author = Q(user_type__exact='m') | Q(user_type__exact='a')
+        moderator_or_author = Q(user_type__exact='a')
         return queryset.filter(moderator_or_author)
 
 
@@ -105,7 +103,7 @@ class MyAccount(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         # Add context data for posts made by the user
-        if self.object.user_type == 'm' or self.object.user_type == 'a':
+        if self.object.can_post:
             user_posts = BlogPost.objects.filter(author=self.object)
             context['posts'] = user_posts
 
@@ -152,13 +150,13 @@ class MakePostView(LoginRequiredMixin, CreateView):
     form_class = PostForm
 
     def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or request.user.user_type == 'r':
+        if not request.user.is_authenticated or not request.user.can_post:
             # Only logged in Authors and Moderators can post
             raise Http404("Page not found")
         return super(MakePostView, self).get(self, request, *args, **kwargs)
 
     def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or request.user.user_type == 'r':
+        if not request.user.is_authenticated or not request.user.can_post:
             # Only logged in Authors and Moderators can post
             raise Http404("Page not found")
 
