@@ -180,3 +180,17 @@ class UpdateProfile(UpdateView):
         if not self.request.user.is_authenticated:
             raise Http404()
         return self.request.user
+
+
+class BlogSearchView(ListView):
+    model = BlogPost
+    template_name = 'blog/posts.html'
+
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        print(self.kwargs)
+        query = self.request.GET.get('q')
+        if not query:
+            raise Http404
+        search_query = Q(title__icontains=query) | Q(content__icontains=query)
+        return queryset.filter(search_query)
