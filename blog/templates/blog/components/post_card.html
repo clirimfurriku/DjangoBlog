@@ -1,7 +1,7 @@
 {% load static %}
 {% for post in posts %}
     <div class="col s12 m6 l4">
-        <div class="card hoverable">
+        <div class="card hoverable post-card">
             <div class="card-image">
                 {% if post.thumbnail_image %}
                     <img width="300" height="300" src="{{ post.thumbnail_image.url }}" alt="{{ post.title }}">
