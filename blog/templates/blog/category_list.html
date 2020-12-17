@@ -6,7 +6,9 @@
 {% block bodyblock %}
     <div class="row">
         {% for category in object_list %}
-            {% include "blog/components/category_card.html" %}
+            {% if not category.parent %}
+                {% include "blog/components/category_card.html" %}
+            {% endif %}
         {% endfor %}
     </div>
 {% endblock %}
