@@ -21,6 +21,16 @@
                         <i class="material-icons tiny">person</i>
                         <span class="title">Author: {{ post.author.username }}</span>
                     </li>
+                    {% if post.category.all %}
+                        <li class="collection-item">
+                            <i class="material-icons tiny">list</i>
+                            <span class="title">Category:
+                                {% for category in  post.category.all %}
+                                    {{ category }}
+                                {% endfor %}
+                        </span>
+                        </li>
+                    {% endif %}
                 </ul>
                 <br>
                 <p class="truncate">{{ post.short_description }}</p>

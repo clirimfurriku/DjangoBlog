@@ -1,0 +1,19 @@
+<div class="col s12 m6 l4">
+    <div class="card hoverable">
+        <div class="card-content">
+            <ul>
+                <li class="collection-item">
+                    <span class="title">Category: <b>{{ category.name }}</b></span>
+                </li>
+            </ul>
+            <ul>
+                <li class="collection-item">
+                    <span class="title">Posts: {{ category.posts.count }}</span>
+                </li>
+            </ul>
+        </div>
+        <div class="card-action">
+            <a href="{% url 'category' category.id %}" style="color: #2196F3;">Posts in this category</a>
+        </div>
+    </div>
+</div>

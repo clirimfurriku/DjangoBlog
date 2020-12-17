@@ -4,6 +4,22 @@
     Blog Home
 {% endblock %}
 {% block bodyblock %}
+    {% if object %}
+        {% include "blog/components/breadcrumbs.html" %}
+    {% endif %}
+    {% if object.child.all %}
+        <div>
+            <h4>Subcategories</h4>
+        </div>
+        <div class="row">
+            {% for category in object.child.all %}
+                {% include "blog/components/category_card.html" %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <div>
+        <h4>Posts</h4>
+    </div>
     <div class="row">
         {% include "blog/components/post_card.html" with posts=object_list %}
     </div>

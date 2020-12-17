@@ -1,5 +1,5 @@
 from django.contrib import admin
-from blog.models import BlogPost, UserComment, UserModel
+from blog.models import BlogPost, UserComment, UserModel, Category
 from django.contrib.auth.admin import UserAdmin
 
 
@@ -15,3 +15,4 @@ class UserAdminExt(UserAdmin):
 admin.site.register(UserModel, UserAdminExt)
 admin.site.register(BlogPost)
 admin.site.register(UserComment)
+admin.site.register(Category)

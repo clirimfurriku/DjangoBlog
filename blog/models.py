@@ -94,6 +94,14 @@ class UserModel(AbstractBaseUser):
         return self.is_admin
 
 
+class Category(models.Model):
+    name = models.CharField(max_length=128)
+    parent = models.ForeignKey('self', on_delete=models.SET_NULL, blank=True, null=True, related_name='child')
+
+    def __str__(self):
+        return self.name
+
+
 class BlogPost(models.Model):
     title = models.CharField(max_length=256)
     short_description = models.TextField(max_length=1024)
@@ -102,7 +110,8 @@ class BlogPost(models.Model):
     updated_date = models.DateTimeField(default=timezone.now)
     thumbnail_image = models.ImageField(null=True, blank=True)
     author = models.ForeignKey(UserModel, on_delete=models.SET_NULL, null=True, blank=True)
-
+    category = models.ManyToManyField(Category, related_name='posts', blank=True)
+    
     class Meta:
         ordering = ['-created_date']
 

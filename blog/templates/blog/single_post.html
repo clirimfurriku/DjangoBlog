@@ -10,10 +10,12 @@
                 <img class="materialboxed" width="300" height="300" src="{{ object.thumbnail_image.url }}"
                      alt="{{ object.title }}">
             {% else %}
-                <img class="materialboxed" width="300" height="300" src="{% static 'default.jpg' %}" alt="Default post image">
+                <img class="materialboxed" width="300" height="300" src="{% static 'default.jpg' %}"
+                     alt="Default post image">
             {% endif %}
             <span class="card-title">{{ object.title }}</span>
         </div>
+        {% include "blog/components/breadcrumbs.html" with category=object.category.first %}
         <div style="padding: 20px">
             <ul>
                 <li class="collection-item">
@@ -24,6 +26,16 @@
                     <i class="material-icons tiny">person</i>
                     <span class="title">Author: {{ object.author.username }}</span>
                 </li>
+                {% if object.category.all %}
+                    <li class="collection-item">
+                        <i class="material-icons tiny">list</i>
+                        <span class="title">Category:
+                            {% for category in  object.category.all %}
+                                {{ category }}
+                            {% endfor %}
+                        </span>
+                    </li>
+                {% endif %}
             </ul>
             <hr color="green">
             {{ object.content|linebreaks }}

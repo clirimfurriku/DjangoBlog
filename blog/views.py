@@ -7,7 +7,7 @@ from django.views.generic import ListView, DetailView, CreateView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from blog.forms import SignUpForm, PostForm
-from blog.models import BlogPost, UserComment, UserModel
+from blog.models import BlogPost, UserComment, UserModel, Category
 
 
 class BlogPostsView(ListView):
@@ -180,6 +180,22 @@ class UpdateProfile(UpdateView):
         if not self.request.user.is_authenticated:
             raise Http404()
         return self.request.user
+
+
+class CategoryView(ListView):
+    model = Category
+
+
+class CategoryPostsView(DetailView):
+    model = Category
+    template_name = 'blog/posts.html'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        blog_posts = BlogPost.objects.filter(category=self.object)
+        if blog_posts:
+            context['object_list'] = blog_posts
+        return context
 
 
 class BlogSearchView(ListView):

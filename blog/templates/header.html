@@ -8,6 +8,7 @@
             {% endif %}
             <li><a href="{% url 'home' %}">All posts</a></li>
             <li><a href="{% url 'bloggers' %}">Authors</a></li>
+            <li><a href="{% url 'categories' %}">Categories</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'account' %}">Account</a></li>
 

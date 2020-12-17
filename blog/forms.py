@@ -27,4 +27,5 @@ class PostForm(ModelForm):
             'short_description',
             'content',
             'thumbnail_image',
+            'category'
         )
