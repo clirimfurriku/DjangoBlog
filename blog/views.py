@@ -136,12 +136,11 @@ class UserSignUpView(CreateView):
 
     def post(self, request, *args, **kwargs):
         form = self.get_form()
-        if form.is_valid():
-            self.object = form.save()
-            login(request, self.object)
-            return redirect('home')
-        else:
+        if not form.is_valid():
             return self.form_invalid(form)
+        self.object = form.save()
+        login(request, self.object)
+        return redirect('home')
 
 
 class MakePostView(LoginRequiredMixin, CreateView):
@@ -161,13 +160,12 @@ class MakePostView(LoginRequiredMixin, CreateView):
             raise Http404("Page not found")
 
         form = self.get_form()
-        if form.is_valid():
-            self.object = form.save()
-            self.object.author = request.user
-            self.object.save()
-            return redirect('home')
-        else:
+        if not form.is_valid():
             return self.form_invalid(form)
+        self.object = form.save()
+        self.object.author = request.user
+        self.object.save()
+        return redirect('home')
 
 
 class UpdateProfile(UpdateView):
