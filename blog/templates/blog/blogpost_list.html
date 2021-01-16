@@ -5,7 +5,7 @@
 {% endblock %}
 {% block bodyblock %}
     {% if object %}
-        {% include "blog/components/breadcrumbs.html" %}
+        {% include "breadcrumbs.html" %}
     {% endif %}
     {% if object.child.all %}
         <div>
@@ -13,7 +13,7 @@
         </div>
         <div class="row">
             {% for category in object.child.all %}
-                {% include "blog/components/category_card.html" %}
+                {% include "category/components/category_card.html" %}
             {% endfor %}
         </div>
     {% endif %}

@@ -7,17 +7,17 @@
     <nav style="background-color: white; box-shadow: unset !important;">
         <div class="nav-wrapper">
             <div class="col s12">
-                <a href="{% url 'home' %}" class="breadcrumb">Home</a>
+                <a href="{% url 'blog:home' %}" class="breadcrumb">Home</a>
                 {% if category %}
                     {% if category.parent %}
                         {% if category.parent.parent %}
-                            <a href="{% url 'category' category.parent.parent.id %}"
+                            <a href="{% url 'category:category' category.parent.parent.id %}"
                                class="breadcrumb">{{ category.parent.parent.name }}</a>
                         {% endif %}
-                        <a href="{% url 'category' category.parent.id %}"
+                        <a href="{% url 'category:category' category.parent.id %}"
                            class="breadcrumb">{{ category.parent.name }}</a>
                     {% endif %}
-                    <a href="{% url 'category' category.id %}"
+                    <a href="{% url 'category:category' category.id %}"
                        class="breadcrumb">{{ category.name }}</a>
                 {% endif %}
             </div>

@@ -6,7 +6,7 @@
 {% block bodyblock %}
     <div class="card hoverable">
          {% for author in object_list %}
-            {% include "blog/components/about_author.html" with more=True %}
+            {% include "account/components/about_author.html" with more=True %}
     {% endfor %}
         </div>
 {% endblock %}

@@ -1,18 +1,13 @@
-from django.contrib.auth import login
-from django.contrib.auth.views import LoginView, LogoutView
 from django.db.models import Q
 from django.http import Http404
 from django.shortcuts import redirect
-from django.views.generic import ListView, DetailView, CreateView, UpdateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.views.generic import ListView, DetailView
 
-from blog.forms import SignUpForm, PostForm
 from blog.models import BlogPost, UserComment, UserModel, Category
 
 
 class BlogPostsView(ListView):
     model = BlogPost
-    template_name = "blog/posts.html"
     paginate_by = 6
 
     def get_context_data(self, **kwargs):
@@ -22,6 +17,7 @@ class BlogPostsView(ListView):
 
         # Create a list of max 3 pages right and 3 pages left from the
         # current page and pas it to template as context argument
+        # If there is only one page do not include in pagination
         for i in range(
                 pagination.number - 3
                 if pagination.number - 3 > 0 else 1,
@@ -29,7 +25,7 @@ class BlogPostsView(ListView):
                 if pagination.number + 3 <= pagination.paginator.num_pages else pagination.paginator.num_pages + 1):
             pages.append(i)
 
-        context['pages'] = pages
+        context['pages'] = pages if len(pages) > 1 else []
         return context
 
 
@@ -49,7 +45,6 @@ class AuthorPostsView(DetailView):
 
 class BlogPostDetailView(DetailView):
     model = BlogPost
-    template_name = "blog/single_post.html"
 
     def post(self, request, *args, **kwargs):
         """
@@ -83,117 +78,12 @@ class BlogPostDetailView(DetailView):
 
 class BloggersList(ListView):
     model = UserModel
-    template_name = 'blog/authors.html'
+    template_name = 'blog/authors_list.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
         moderator_or_author = Q(user_type__exact='a')
         return queryset.filter(moderator_or_author)
-
-
-class MyAccount(DetailView):
-    model = UserModel
-    template_name = 'blog/account/account.html'
-
-    def get_object(self, queryset=None):
-        if not self.request.user.is_authenticated:
-            raise Http404()
-        return self.request.user
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        # Add context data for posts made by the user
-        if self.object.can_post:
-            user_posts = BlogPost.objects.filter(author=self.object)
-            context['posts'] = user_posts
-
-        return context
-
-
-class UserLoginView(LoginView):
-    template_name = 'blog/account/login.html'
-
-    def get(self, request, **kwargs):
-        # If user already logged in redirect home
-        if request.user.is_authenticated:
-            return redirect('home')
-        return super().get(request, **kwargs)
-
-
-class UserLogoutView(LogoutView):
-    template_name = 'blog/account/logout.html'
-
-
-class UserSignUpView(CreateView):
-    template_name = 'blog/account/signup.html'
-    success_url = '/'
-    form_class = SignUpForm
-
-    def get(self, request, *args, **kwargs):
-        if request.user.is_authenticated:
-            return redirect('home')
-        return super(UserSignUpView, self).get(self, request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        form = self.get_form()
-        if not form.is_valid():
-            return self.form_invalid(form)
-        self.object = form.save()
-        login(request, self.object)
-        return redirect('home')
-
-
-class MakePostView(LoginRequiredMixin, CreateView):
-    template_name = 'blog/account/post.html'
-    success_url = '/'
-    form_class = PostForm
-
-    def get(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or not request.user.can_post:
-            # Only logged in Authors and Moderators can post
-            raise Http404("Page not found")
-        return super(MakePostView, self).get(self, request, *args, **kwargs)
-
-    def post(self, request, *args, **kwargs):
-        if not request.user.is_authenticated or not request.user.can_post:
-            # Only logged in Authors and Moderators can post
-            raise Http404("Page not found")
-
-        form = self.get_form()
-        if not form.is_valid():
-            return self.form_invalid(form)
-        self.object = form.save()
-        self.object.author = request.user
-        self.object.save()
-        return redirect('home')
-
-
-class UpdateProfile(UpdateView):
-    model = UserModel
-    fields = ['bio', 'twitter', 'instagram', 'facebook', 'avatar']
-    template_name = 'blog/account/update_profile.html'
-    success_url = '/account'
-
-    def get_object(self, queryset=None):
-        if not self.request.user.is_authenticated:
-            raise Http404()
-        return self.request.user
-
-
-class CategoryView(ListView):
-    model = Category
-
-
-class CategoryPostsView(DetailView):
-    model = Category
-    template_name = 'blog/posts.html'
-
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        blog_posts = BlogPost.objects.filter(category=self.object)
-        if blog_posts:
-            context['object_list'] = blog_posts
-        return context
 
 
 class BlogSearchView(ListView):

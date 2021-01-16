@@ -24,7 +24,7 @@
 {% endif %}
 {% if user.is_authenticated %}
     <h6>Make a comment</h6>
-    <form class="col s12" autocomplete="off" action="{% url 'post' object.id %}" method="POST">
+    <form class="col s12" autocomplete="off" action="{% url 'blog:post' object.id %}" method="POST">
         <div class="row">
             <div class="input-field col s12 m6">
                 <input id="comment" name="comment" type="text">
@@ -39,5 +39,5 @@
         </div>
     </form>
 {% else %}
-    <a href="{% url 'login' %}"><p>Login to make comments.</p></a>
+    <a href="{% url 'account:login' %}"><p>Login to make comments.</p></a>
 {% endif %}

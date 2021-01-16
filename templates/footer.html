@@ -9,7 +9,7 @@
                     </div>
                 </div>
                 <div class="row">
-                    <form action="{% url 'search' %}" class="col s12">
+                    <form action="{% url 'blog:search' %}" class="col s12">
                         <div class="row">
                             <div class="input-field col s12">
                                 <input placeholder="Search" id="q" type="text" class="validate" name="q" style="color: whitesmoke" value="{{ request.GET.q }}">
@@ -22,15 +22,15 @@
             <div class="col l4 offset-l2 s12">
                 <h5 class="white-text">Links</h5>
                 <ul>
-                    <li><a class="grey-text text-lighten-3" href="{% url 'home' %}">All posts</a></li>
-                    <li><a class="grey-text text-lighten-3" href="{% url 'bloggers' %}">Bloggers</a></li>
-                    <li><a class="grey-text text-lighten-3" href="{% url 'categories' %}">Categories</a></li>
+                    <li><a class="grey-text text-lighten-3" href="{% url 'blog:home' %}">All posts</a></li>
+                    <li><a class="grey-text text-lighten-3" href="{% url 'blog:bloggers' %}">Bloggers</a></li>
+                    <li><a class="grey-text text-lighten-3" href="{% url 'category:categories' %}">Categories</a></li>
                     {% if user.is_authenticated %}
-                        <li><a class="grey-text text-lighten-3" href="{% url 'account' %}">Account</a></li>
-                        <li><a class="grey-text text-lighten-3" href="{% url 'logout' %}">Logout</a></li>
+                        <li><a class="grey-text text-lighten-3" href="{% url 'account:account' %}">Account</a></li>
+                        <li><a class="grey-text text-lighten-3" href="{% url 'account:logout' %}">Logout</a></li>
                     {% else %}
-                        <li><a class="grey-text text-lighten-3" href="{% url 'login' %}">Login</a></li>
-                        <li><a class="grey-text text-lighten-3" href="{% url 'signup' %}">Signup</a></li>
+                        <li><a class="grey-text text-lighten-3" href="{% url 'account:login' %}">Login</a></li>
+                        <li><a class="grey-text text-lighten-3" href="{% url 'account:signup' %}">Signup</a></li>
                     {% endif %}
                 </ul>
             </div>

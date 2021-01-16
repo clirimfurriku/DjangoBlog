@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block titleblock %}
+    My account
+{% endblock %}
+{% block bodyblock %}
+    <div class="col">
+        <a class="waves-effect waves-light btn blue" href="{% url 'account:password_change' %}">Change Password</a>
+        <a class="waves-effect waves-light btn blue" href="{% url 'account:update_profile' %}">Update Profile</a>
+    </div>
+    {% if object.user_type == 'm' or object.user_type == 'a' %}
+        {% include 'account/account_blogger.html' %}
+    {% else %}
+        <h2 class="header">About Me</h2>
+        {% include 'account/components/about_author.html' with author=object %}
+    {% endif %}
+{% endblock %}

@@ -19,8 +19,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/2.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+# FIXME: Move secret key to env variables
 SECRET_KEY = '62nq8bk^7)#2!-!8y7aef=h6ayif&mp=tdh=_3kx1b&y*x&0gm'
 
+# TODO: Disable debugging toolbar when debugging is disabled
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
@@ -44,7 +46,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_extensions',
     'debug_toolbar',
-    'blog'
+    'blog',
+    'account',
+    'category',
 ]
 
 MIDDLEWARE = [
@@ -109,7 +113,7 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 # Change user model
-AUTH_USER_MODEL = 'blog.UserModel'
+AUTH_USER_MODEL = 'account.UserModel'
 
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/

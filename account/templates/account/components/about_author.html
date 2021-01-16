@@ -10,7 +10,7 @@
         </div>
         <div class="card-stacked">
             <div class="card-content">
-                <a href="{% url 'author' author.id %}"><h5>{{ author.username }}</h5></a>
+                <a href="{% url 'blog:author' author.id %}"><h5>{{ author.username }}</h5></a>
                 <p>{{ author.bio }}</p>
                 <br>
                 <div class="col" style="padding-left: 10px">
@@ -29,7 +29,7 @@
             </div>
             {% if more %}
                 <div class="card-action">
-                    <a href="{% url 'author' author.id %}"><p style="color: #2196F3;">More Posts</p></a>
+                    <a href="{% url 'blog:author' author.id %}"><p style="color: #2196F3;">More Posts</p></a>
                 </div>
             {% endif %}
         </div>
