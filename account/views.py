@@ -7,7 +7,7 @@ from django.views.generic import DetailView, CreateView, UpdateView
 
 from blog.forms import PostForm
 from blog.models import BlogPost, UserModel
-from forms import SignUpForm
+from account.forms import SignUpForm
 
 
 class MyAccount(DetailView):

@@ -10,3 +10,10 @@ class Category(models.Model):
 
     def __str__(self):
         return self.name
+
+    @property
+    def get_post_count(self):
+        posts = self.posts.count()
+        for child in self.child.all():
+            posts += child.posts.count()
+        return posts
