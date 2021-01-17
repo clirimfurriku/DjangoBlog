@@ -1,7 +1,9 @@
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils import timezone
 from account.models import UserModel
 from category.models import Category
+from interaction.models import Like
 
 
 class BlogPost(models.Model):
@@ -13,9 +15,13 @@ class BlogPost(models.Model):
     thumbnail_image = models.ImageField(null=True, blank=True)
     author = models.ForeignKey(UserModel, on_delete=models.SET_NULL, null=True, blank=True)
     category = models.ManyToManyField(Category, related_name='posts', blank=True)
+    likes = GenericRelation(Like)
 
     class Meta:
         ordering = ['-created_date']
+
+    def has_user_liked(self, user: UserModel):
+        return self.likes.filter(user=user).exists()
 
     def __str__(self):
         return f'{self.title} {self.updated_date}'

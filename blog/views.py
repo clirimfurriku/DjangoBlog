@@ -3,7 +3,7 @@ from django.http import Http404
 from django.shortcuts import redirect
 from django.views.generic import ListView, DetailView
 
-from blog.models import BlogPost, UserComment, UserModel, Category
+from blog.models import BlogPost, UserComment, UserModel
 
 
 class BlogPostsView(ListView):
