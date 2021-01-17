@@ -88,7 +88,7 @@ class BloggersList(ListView):
 
 class BlogSearchView(ListView):
     model = BlogPost
-    template_name = 'blog/posts.html'
+    template_name = 'blog/blogpost_list.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
