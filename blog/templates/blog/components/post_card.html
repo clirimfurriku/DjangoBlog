@@ -43,14 +43,14 @@
                        id="post-{{ post.id }}">
                     {% has_user_liked post=post user=user as is_liked %}
                         {% if is_liked %}
-                            <i class="material-icons">favorite_border</i>
-                        {% else %}
                             <i class="material-icons">favorite</i>
+                        {% else %}
+                            <i class="material-icons">favorite_border</i>
                         {% endif %}
                     </a>
                 {% else %}
                     <a class="right" href="{% url 'account:login' %}" id="post-{{ post.id }}">
-                        <i class="material-icons">star_border</i>
+                        <i class="material-icons">favorite_border</i>
                     </a>
                 {% endif %}
             </div>

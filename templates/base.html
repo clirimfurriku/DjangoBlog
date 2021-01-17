@@ -15,7 +15,8 @@
           integrity="sha512-+4zCK9k+qNFUR5X+cKL9EIR+ZOhtIloNl9GIKS57V1MyNsYpYcUrUeQc9vNfzsWfV28IaLL3i96P9sdNyeRssA=="
           crossorigin="anonymous"/>
     <script>
-        async function SwitchStar(productID, likeType) {
+        async function SwitchStar(productID, likeType, toIncrementID) {
+            let likeCount;
             const response = await fetch('/action/like/' + likeType + '/' + productID.toString().replace(likeType + "-", ""), {
                 method: 'PUT',
                 headers: {
@@ -27,15 +28,25 @@
                     M.toast({html: 'Network error while checking star state', classes: 'rounded'});
                 }
             );
-            var response_json = await response.json();
-            console.log(response_json)
+            const response_json = await response.json();
             const star = document.getElementById(productID);
-            if (response_json.status === "liked") {
+            if (response_json.status === "unliked") {
                 star.firstElementChild.innerText = "favorite_border"
-                M.toast({html: 'Post Liked', classes: 'rounded'});
-            } else if (response_json.status === "unliked") {
+                if (toIncrementID !== void 0) {
+                    likeCount = document.getElementById(toIncrementID);
+                    likeCount.innerText--
+                }
+                M.toast({html: likeType.charAt(0).toUpperCase() + likeType.slice(1) + ' Liked', classes: 'rounded'});
+            } else if (response_json.status === "liked") {
                 star.firstElementChild.innerText = "favorite"
-                M.toast({html: 'Post Like Removed', classes: 'rounded'});
+                if (toIncrementID !== void 0) {
+                    likeCount = document.getElementById(toIncrementID);
+                    likeCount.innerText++
+                }
+                M.toast({
+                    html: likeType.charAt(0).toUpperCase() + likeType.slice(1) + ' Like Removed',
+                    classes: 'rounded'
+                });
             }
         }
     </script>
