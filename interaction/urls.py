@@ -6,5 +6,5 @@ app_name = 'interaction'
 
 urlpatterns = [
     path('/like/post/<int:post_id>', views.like_post, name="like_post"),
-    path('like/comment/<int:id>', views.like_comment, name="like_comment"),
+    path('like/comment/<int:comment_id>', views.like_comment, name="like_comment"),
 ]
