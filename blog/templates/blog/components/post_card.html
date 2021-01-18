@@ -41,7 +41,7 @@
                 {% if user.is_authenticated %}
                     <a class="right" href="javascript:void(0)" onclick="SwitchStar(this.id, 'post')"
                        id="post-{{ post.id }}">
-                    {% has_user_liked post=post user=user as is_liked %}
+                    {% has_user_liked content=post user=user as is_liked %}
                         {% if is_liked %}
                             <i class="material-icons">favorite</i>
                         {% else %}
