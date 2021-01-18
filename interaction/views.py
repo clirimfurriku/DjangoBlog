@@ -20,7 +20,7 @@ def process_like_request(request, obj: Union[Type[BlogPost], Type[UserComment]],
         raise Http404()
 
     # If user already liked the the object remove the like
-    if liked_obj := obj.likes.get(user=request.user):
+    if liked_obj := db_obj.likes.filter(user=request.user):
         liked_obj.delete()
         return JsonResponse({"success": "true", "status": "unliked"})
 
