@@ -38,5 +38,12 @@ class UserComment(models.Model):
     comment_date = models.DateTimeField(auto_now_add=True)
     likes = GenericRelation(Like)
 
+    def has_user_liked(self, user: UserModel):
+        return self.likes.filter(user=user).exists()
+
+    @property
+    def like_count(self):
+        return len(self.likes.all())
+
     def __str__(self):
         return f'{self.author} {self.comment_date}'

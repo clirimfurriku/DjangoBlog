@@ -1,3 +1,4 @@
+{% load user_likes %}
 {% load static %}
 <h4>Post comments</h4>
 {% if comments %}
@@ -11,7 +12,24 @@
                     <img height="50" src="{% static "avatar.png" %}" alt="" class="circle">
 
                 {% endif %}
-                <span class="title bold">{{ comment.author }} | {{ comment.comment_date }}</span>
+                <span class="title bold">{{ comment.author }} | {{ comment.comment_date }} | Likes: <span
+                        id="likeCommentCount-{{ comment.id }}">{{ comment.like_count }}</span></span>
+                {% if user.is_authenticated %}
+                    <a class="right" href="javascript:void(0)"
+                       onclick="SwitchStar(this.id, 'comment', 'likeCommentCount-{{ comment.id }}')"
+                       id="comment-{{ comment.id }}">
+                        {% has_user_liked content=comment user=user as is_liked %}
+                        {% if is_liked %}
+                            <i class="material-icons">favorite</i>
+                        {% else %}
+                            <i class="material-icons">favorite_border</i>
+                        {% endif %}
+                    </a>
+                {% else %}
+                    <a class="right" href="{% url 'account:login' %}" id="post-{{ object.id }}">
+                        <i class="material-icons">favorite_border</i>
+                    </a>
+                {% endif %}
                 <hr>
                 <p>
                     {{ comment.comment }}
