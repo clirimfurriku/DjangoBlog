@@ -36,17 +36,17 @@
                     likeCount = document.getElementById(toIncrementID);
                     likeCount.innerText--
                 }
-                M.toast({html: likeType.charAt(0).toUpperCase() + likeType.slice(1) + ' Liked', classes: 'rounded'});
+                M.toast({
+                    html: likeType.charAt(0).toUpperCase() + likeType.slice(1) + ' Like Removed',
+                    classes: 'rounded'
+                });
             } else if (response_json.status === "liked") {
                 star.firstElementChild.innerText = "favorite"
                 if (toIncrementID !== void 0) {
                     likeCount = document.getElementById(toIncrementID);
                     likeCount.innerText++
                 }
-                M.toast({
-                    html: likeType.charAt(0).toUpperCase() + likeType.slice(1) + ' Like Removed',
-                    classes: 'rounded'
-                });
+                M.toast({html: likeType.charAt(0).toUpperCase() + likeType.slice(1) + ' Liked', classes: 'rounded'});
             }
         }
     </script>
