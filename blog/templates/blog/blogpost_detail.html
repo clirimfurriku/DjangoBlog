@@ -46,11 +46,13 @@
                         <a class="right" href="javascript:void(0)" onclick="SwitchStar(this.id, 'post', 'likeCount')"
                            id="post-{{ object.id }}" style="margin:30px">
                             {% has_user_liked content=object user=user as is_liked %}
-                            {% if is_liked %}
-                                <i class="material-icons">favorite</i>
-                            {% else %}
-                                <i class="material-icons">favorite_border</i>
-                            {% endif %}
+                            <i class="material-icons" style="color: orange">
+                                {% if is_liked %}
+                                    favorite
+                                {% else %}
+                                    favorite_border
+                                {% endif %}
+                            </i>
                         </a>
                     {% else %}
                         <a class="right" href="{% url 'account:login' %}" id="post-{{ object.id }}" style="margin:30px">
