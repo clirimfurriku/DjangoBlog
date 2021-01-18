@@ -25,7 +25,6 @@ class BlogPost(models.Model):
 
     @property
     def like_count(self):
-        print(self.likes.all())
         return len(self.likes.all())
 
     def __str__(self):
@@ -37,6 +36,7 @@ class UserComment(models.Model):
     blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
     comment = models.CharField(max_length=512)
     comment_date = models.DateTimeField(auto_now_add=True)
+    likes = GenericRelation(Like)
 
     def __str__(self):
         return f'{self.author} {self.comment_date}'

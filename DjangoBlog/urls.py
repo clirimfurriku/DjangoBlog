@@ -12,9 +12,9 @@ from interaction import urls as interaction_urls
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include(blog_urls)),
-    path('account', include(account_urls)),
-    path('category', include(category_urls)),
-    path('action', include(interaction_urls)),
+    path('account/', include(account_urls)),
+    path('category/', include(category_urls)),
+    path('action/', include(interaction_urls)),
     path('__debug__/', include(debug_toolbar.urls)),
 ]
 
