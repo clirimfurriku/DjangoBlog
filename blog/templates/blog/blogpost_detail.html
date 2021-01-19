@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+{% load get_related %}
 {% load user_likes %}
 {% load static %}
 {% block titleblock %}
@@ -64,6 +65,14 @@
             <hr color="green">
             {{ object.content|linebreaks }}
             <br>
+            {% get_similar_posts post=object as related_posts %}
+            {% if related_posts %}
+                <hr color="green">
+                <h5>Similar posts: </h5>
+                <div class="row s3 m6 l12">
+                    {% include "blog/components/post_card.html" with posts=related_posts %}
+                </div>
+            {% endif %}
             <h2 class="header">About author</h2>
             {% if object.author %}
                 {% include "account/components/about_author.html" with author=object.author more=True %}
