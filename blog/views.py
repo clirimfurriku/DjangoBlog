@@ -8,6 +8,7 @@ from blog.models import BlogPost, UserComment, UserModel
 
 class BlogPostsView(ListView):
     model = BlogPost
+    queryset = BlogPost.objects.filter(banned=False)
     paginate_by = 6
 
     def get_context_data(self, **kwargs):
@@ -36,7 +37,7 @@ class AuthorPostsView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         if self.object.can_post:
-            user_posts = BlogPost.objects.filter(author=self.object)
+            user_posts = BlogPost.objects.filter(author=self.object, banned=False)
             context['posts'] = user_posts
         else:
             raise Http404()
@@ -45,6 +46,7 @@ class AuthorPostsView(DetailView):
 
 class BlogPostDetailView(DetailView):
     model = BlogPost
+    queryset = BlogPost.objects.filter(banned=False)
 
     def post(self, request, *args, **kwargs):
         """
@@ -70,7 +72,7 @@ class BlogPostDetailView(DetailView):
                     comment=comment
                 )
                 new_comment.save()
-        comments = UserComment.objects.filter(blog_post=self.object)
+        comments = UserComment.objects.filter(blog_post=self.object, banned=False)
         if comments:
             context['comments'] = comments
         return context
@@ -88,13 +90,13 @@ class BloggersList(ListView):
 
 class BlogSearchView(ListView):
     model = BlogPost
+    queryset = BlogPost.objects.filter(banned=False)
     template_name = 'blog/blogpost_list.html'
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        print(self.kwargs)
         query = self.request.GET.get('q')
         if not query:
             raise Http404
         search_query = Q(title__icontains=query) | Q(content__icontains=query)
-        return queryset.filter(search_query)
+        return queryset.filter(search_query, banned=False)

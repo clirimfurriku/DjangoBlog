@@ -32,26 +32,34 @@
                         </span>
                         </li>
                     {% endif %}
+                    {% if post.banned %}
+                        <li class="collection-item red">
+                            <i class="material-icons tiny">not_interested</i>
+                            <span class="title">This post has been banned</span>
+                        </li>
+                    {% endif %}
                 </ul>
                 <br>
                 <p class="truncate">{{ post.short_description }}</p>
             </div>
             <div class="card-action">
-                <a href="{% url 'blog:post' post.id %}" style="color: #2196F3;">Read More</a>
-                {% if user.is_authenticated %}
-                    <a class="right" href="javascript:void(0)" onclick="SwitchStar(this.id, 'post')"
-                       id="post-{{ post.id }}">
-                    {% has_user_liked content=post user=user as is_liked %}
-                        {% if is_liked %}
-                            <i class="material-icons">favorite</i>
-                        {% else %}
+                {% if not post.banned %}
+                    <a href="{% url 'blog:post' post.id %}" style="color: #2196F3;">Read More</a>
+                    {% if user.is_authenticated %}
+                        <a class="right" href="javascript:void(0)" onclick="SwitchStar(this.id, 'post')"
+                           id="post-{{ post.id }}">
+                            {% has_user_liked content=post user=user as is_liked %}
+                            {% if is_liked %}
+                                <i class="material-icons">favorite</i>
+                            {% else %}
+                                <i class="material-icons">favorite_border</i>
+                            {% endif %}
+                        </a>
+                    {% else %}
+                        <a class="right" href="{% url 'account:login' %}" id="post-{{ post.id }}">
                             <i class="material-icons">favorite_border</i>
-                        {% endif %}
-                    </a>
-                {% else %}
-                    <a class="right" href="{% url 'account:login' %}" id="post-{{ post.id }}">
-                        <i class="material-icons">favorite_border</i>
-                    </a>
+                        </a>
+                    {% endif %}
                 {% endif %}
             </div>
         </div>

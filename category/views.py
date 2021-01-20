@@ -14,7 +14,7 @@ class CategoryPostsView(DetailView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        blog_posts = BlogPost.objects.filter(category=self.object)
+        blog_posts = BlogPost.objects.filter(category=self.object, banned=False)
         if blog_posts:
             context['object_list'] = blog_posts
         return context
