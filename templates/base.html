@@ -49,6 +49,28 @@
                 M.toast({html: likeType.charAt(0).toUpperCase() + likeType.slice(1) + ' Liked', classes: 'rounded'});
             }
         }
+        async function Report(productID, reportType) {
+            const response = await fetch('/action/report/' + reportType + '/' + productID.toString().replace(reportType + "-report-", ""), {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Accept': 'application/json',
+                }
+            }).catch(
+                () => {
+                    M.toast({html: 'Network error while checking star state', classes: 'rounded'});
+                }
+            );
+            const response_json = await response.json();
+            if (response_json.status === "exists") {
+                M.toast({
+                    html: 'You have already reported this ' + reportType.charAt(0).toUpperCase() + reportType.slice(1),
+                    classes: 'rounded'
+                });
+            } else if (response_json.status === "reported") {
+                M.toast({html: reportType.charAt(0).toUpperCase() + reportType.slice(1) + ' Report has been sent to our staff for review', classes: 'rounded'});
+            }
+        }
     </script>
     <style>
         .post-card {

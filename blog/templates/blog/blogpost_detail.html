@@ -55,9 +55,21 @@
                                 {% endif %}
                             </i>
                         </a>
+                        <a class="right tooltipped" href="javascript:void(0)" onclick="Report(this.id, 'post')"
+                           id="post-report-{{ object.id }}" style="margin:30px"
+                           data-tooltip="Report this post">
+                            {% has_user_liked content=object user=user as is_liked %}
+                            <i class="material-icons" style="color: red">
+                                not_interested
+                            </i>
+                        </a>
                     {% else %}
                         <a class="right" href="{% url 'account:login' %}" id="post-{{ object.id }}" style="margin:30px">
-                            <i class="material-icons">favorite_border</i>
+                            <i class="material-icons" style="color: orange">favorite_border</i>
+                        </a>
+                        <a class="right tooltipped" href="{% url 'account:login' %}" id="post-{{ object.id }}"
+                           style="margin:30px" data-tooltip="Report this post">
+                            <i class="material-icons" style="color: red">not_interested</i>
                         </a>
                     {% endif %}
                 </li>

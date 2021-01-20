@@ -17,7 +17,7 @@ class BlogPost(models.Model):
     category = models.ManyToManyField(Category, related_name='posts', blank=True)
     banned = models.BooleanField(default=False)
     likes = GenericRelation(Like)
-    reports = GenericRelation(Like)
+    reports = GenericRelation(Report)
 
     class Meta:
         ordering = ['-created_date']
@@ -50,7 +50,7 @@ class UserComment(models.Model):
     comment_date = models.DateTimeField(auto_now_add=True)
     banned = models.BooleanField(default=False)
     likes = GenericRelation(Like)
-    reports = GenericRelation(Like)
+    reports = GenericRelation(Report)
 
     def has_user_liked(self, user: UserModel):
         return self.likes.filter(user=user).exists()

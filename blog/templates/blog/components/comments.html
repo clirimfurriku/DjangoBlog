@@ -25,9 +25,22 @@
                             <i class="material-icons">favorite_border</i>
                         {% endif %}
                     </a>
+                    <a class="right tooltipped" href="javascript:void(0)"
+                       onclick="Report(this.id, 'comment')"
+                       id="comment-report-{{ comment.id }}"
+                       style="color: red; margin-right:20px"
+                       data-tooltip="Report this comment">
+                        {% has_user_liked content=comment user=user as is_liked %}
+                        <i class="material-icons">not_interested</i>
+                    </a>
+
                 {% else %}
-                    <a class="right" href="{% url 'account:login' %}" id="post-{{ object.id }}">
+                    <a class="right" href="{% url 'account:login' %}" id="comment-{{ object.id }}">
                         <i class="material-icons">favorite_border</i>
+                    </a>
+                    <a class="right tooltipped" href="{% url 'account:login' %}" id="comment-report{{ object.id }}"
+                       style="color: red; margin-right:20px" data-tooltip="Report this comment">
+                        <i class="material-icons tooltipped">not_interested</i>
                     </a>
                 {% endif %}
                 <hr>
