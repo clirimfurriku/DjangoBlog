@@ -25,7 +25,7 @@ class MyUserManager(BaseUserManager):
             email,
             password=password,
             username=username,
-            user_type=user_type or 'a',  # By default make the superuser author
+            user_type=user_type or 's',  # By default make the superuser administrator
         )
         user.is_admin = True
         user.save(using=self._db)
@@ -52,6 +52,7 @@ class UserModel(AbstractBaseUser):
     # 1 - Authors (Can publish articles, comment)
     # 2 - Reader (Can comment on articles)
     USER_CHOICES = (
+        ('s', 'Administrator'),
         ('a', 'Author'),
         ('r', 'Reader')
     )
@@ -78,8 +79,8 @@ class UserModel(AbstractBaseUser):
 
     @property
     def can_post(self):
-        """Only authors can post"""
-        return self.user_type == 'a'
+        """Only authors and administrators can post"""
+        return self.user_type in ['a', 's']
 
     def has_module_perms(self, app_label):
         """Does the user have permissions to view the app `app_label`?"""
@@ -90,4 +91,4 @@ class UserModel(AbstractBaseUser):
     def is_staff(self):
         """Is the user a member of staff?"""
         # Simplest possible answer: All admins are staff
-        return self.is_admin
+        return self.is_admin or self.user_type == 's'
