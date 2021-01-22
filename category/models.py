@@ -9,7 +9,7 @@ class Category(models.Model):
         verbose_name_plural = "Categories"
 
     def __str__(self):
-        return self.name
+        return f'{self.parent} - {self.name}' if self.parent else self.name
 
     @property
     def get_post_count(self):
