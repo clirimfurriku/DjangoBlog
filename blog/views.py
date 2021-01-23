@@ -84,7 +84,7 @@ class BloggersList(ListView):
 
     def get_queryset(self):
         queryset = super().get_queryset()
-        moderator_or_author = Q(user_type__exact='a')
+        moderator_or_author = Q(user_type__in='a') | Q(user_type__in='s')
         return queryset.filter(moderator_or_author)
 
 
