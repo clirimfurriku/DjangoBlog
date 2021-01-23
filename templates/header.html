@@ -2,6 +2,13 @@
     <div class="nav-wrapper blue" style="padding-left: 10px; padding-right: 10px">
         <a href="{% url 'blog:home' %}" class="brand-logo">DjangoBlog</a>
         <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        {% if user.is_staff %}
+            <ul id="dropdown1" class="dropdown-content">
+                <li class="divider"></li>
+                <li><a href="{% url 'interaction:reported_posts' %}">Reported posts</a></li>
+                <li><a href="{% url 'interaction:reported_comments' %}">Reported comments</a></li>
+            </ul>
+        {% endif %}
         <ul id="nav-mobile" class="right hide-on-med-and-down">
             {% if user.is_authenticated %}
                 <li><b>Hey {{ user }}!</b></li>
@@ -11,7 +18,10 @@
             <li><a href="{% url 'category:categories' %}">Categories</a></li>
             {% if user.is_authenticated %}
                 <li><a href="{% url 'account:account' %}">Account</a></li>
-
+                {% if user.is_staff %}
+                    <li><a class="dropdown-trigger" href="#!" data-target="dropdown1">Reports<i
+                            class="material-icons right">arrow_drop_down</i></a></li>
+                {% endif %}
                 <li><a href="{% url 'account:logout' %}">Logout</a></li>
             {% else %}
                 <li><a href="{% url 'account:login' %}">Login</a></li>
