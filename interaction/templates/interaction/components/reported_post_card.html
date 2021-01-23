@@ -1,0 +1,56 @@
+{% load static %}
+{% load user_likes %}
+{% for post in posts %}
+    <div class="col s12 m6 l4">
+        <div class="card hoverable post-card">
+            <div class="card-image">
+                {% if post.thumbnail_image %}
+                    <img width="300" height="300" src="{{ comment.blog_post.thumbnail_image.url }}" alt="{{ post.title }}">
+                {% else %}
+                    <img width="300" height="300" src="{% static 'default.jpg' %}">
+                {% endif %}
+                <span class="card-title">{{ post.title }}
+                        </span>
+            </div>
+            <div class="card-content">
+                <ul>
+                    <li class="collection-item">
+                        <i class="material-icons tiny">access_time</i>
+                        <span class="title">Published: {{ post.updated_date }}</span>
+                    </li>
+                    <li class="collection-item">
+                        <i class="material-icons tiny">person</i>
+                        <span class="title">Author: {{ post.author.username }}</span>
+                    </li>
+                    <li class="collection-item">
+                        <i class="material-icons tiny">remove_circle</i>
+                        <span class="title">Reports: {{ post.report_count }}</span>
+                    </li>
+                    {% if post.category.all %}
+                        <li class="collection-item">
+                            <i class="material-icons tiny">list</i>
+                            <span class="title">Category:
+                                {% for category in  post.category.all %}
+                                    {{ category }}
+                                {% endfor %}
+                        </span>
+                        </li>
+                    {% endif %}
+                </ul>
+                <br>
+                <p class="truncate">{{ post.short_description }}</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'blog:post' post.id %}" style="color: #2196F3;">Read More</a>
+                <a class="right tooltipped" href="javascript:void(0)" style="color: red" onclick="BanAction(this.id, 'post', 'ban')"
+                   id="ban-{{ post.id }}" data-tooltip="Ban this post">
+                    <i class="material-icons">not_interested</i>
+                </a>
+                <a class="right tooltipped" href="javascript:void(0)" style="color: green" onclick="BanAction(this.id, 'post', 'remove')"
+                   id="remove-{{ post.id }}" data-tooltip="Ignore reports">
+                    <i class="material-icons">offline_pin</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endfor %}

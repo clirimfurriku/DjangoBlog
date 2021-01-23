@@ -58,3 +58,30 @@ async function Report(productID, reportType) {
         });
     }
 }
+
+
+async function BanAction(objectID, banObjet, banType) {
+    const response = await fetch('/action/report/' + banObjet + '/' + banType + '/' + objectID.toString().replace(banType + "-", ""), {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json',
+        }
+    }).catch(
+        () => {
+            M.toast({html: 'Network error while checking star state', classes: 'rounded'});
+        }
+    );
+    if (response.status === 200) {
+        M.toast({
+            html: 'The ' + banObjet.charAt(0).toUpperCase() + banObjet.slice(1) + ' action done',
+            classes: 'rounded'
+        });
+        document.getElementById(objectID).parentElement.parentElement.remove();
+    } else {
+        M.toast({
+            html: banObjet.charAt(0).toUpperCase() + banObjet.slice(1) + ' Has not been processed, response code: ' + response.status,
+            classes: 'rounded'
+        });
+    }
+}

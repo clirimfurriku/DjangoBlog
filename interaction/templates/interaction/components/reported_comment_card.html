@@ -1,0 +1,42 @@
+{% load static %}
+{% load user_likes %}
+{% for comment in comments %}
+    <div class="col s12 m6 l4">
+        <div class="card hoverable post-card" style="min-height: 250px;">
+            <div class="card-content">
+                <ul>
+                    <li class="collection-item">
+                        <i class="material-icons tiny">access_time</i>
+                        <span class="title">Comment date: {{ comment.comment_date }}</span>
+                    </li>
+                    <li class="collection-item">
+                        <i class="material-icons tiny">person</i>
+                        <span class="title">Comment Author: {{ comment.author.username }}</span>
+                    </li>
+                    <li class="collection-item">
+                        <i class="material-icons tiny">format_indent_increase</i>
+                        <span class="title">Post where the comment was made: {{ comment.blog_post.title }}</span>
+                    </li>
+                    <li class="collection-item">
+                        <i class="material-icons tiny">remove_circle</i>
+                        <span class="title">Comment Reports: {{ comment.report_count }}</span>
+                    </li>
+                </ul>
+                <br><p>Comment: {{ comment.comment }}</p>
+            </div>
+            <div class="card-action">
+                <a href="{% url 'blog:post' comment.blog_post.id %}" style="color: #2196F3;">View post</a>
+                <a class="right tooltipped" href="javascript:void(0)" style="color: red"
+                   onclick="BanAction(this.id, 'comment', 'ban')"
+                   id="ban-{{ comment.id }}" data-tooltip="Ban this comment">
+                    <i class="material-icons">not_interested</i>
+                </a>
+                <a class="right tooltipped" href="javascript:void(0)" style="color: green"
+                   onclick="BanAction(this.id, 'comment', 'remove')"
+                   id="remove-{{ comment.id }}" data-tooltip="Ignore reports">
+                    <i class="material-icons">offline_pin</i>
+                </a>
+            </div>
+        </div>
+    </div>
+{% endfor %}
