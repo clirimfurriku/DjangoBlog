@@ -3,7 +3,7 @@ from django.forms import ChoiceField
 
 
 class SignUpForm(UserCreationForm):
-    user_type = ChoiceField(choices=UserModel.USER_CHOICES)
+    user_type = ChoiceField(choices=UserModel.get_signup_types())
 
     class Meta:
         fields = ('username', 'email', 'password1', 'password2',

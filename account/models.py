@@ -92,3 +92,11 @@ class UserModel(AbstractBaseUser):
         """Is the user a member of staff?"""
         # Simplest possible answer: All admins are staff
         return self.is_admin or self.user_type == 's'
+
+    @staticmethod
+    def get_signup_types():
+        """Return a tuple with types that are allowed to signup"""
+        return (
+            ('a', 'Author'),
+            ('r', 'Reader')
+        )
