@@ -48,8 +48,8 @@ class BlogPost(models.Model):
 
 
 class UserComment(models.Model):
-    author = models.ForeignKey(UserModel, on_delete=models.SET_NULL, null=True)
-    blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE)
+    author = models.ForeignKey(UserModel, on_delete=models.SET_NULL, null=True, related_name='posts')
+    blog_post = models.ForeignKey(BlogPost, on_delete=models.CASCADE, related_name='comments')
     comment = models.CharField(max_length=512)
     comment_date = models.DateTimeField(auto_now_add=True)
     banned = models.BooleanField(default=False)

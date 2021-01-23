@@ -119,7 +119,8 @@ def ignore_reports_comment(request, comment_id, *args, **kwargs):
 
 
 class ReportedPosts(ListView):
-    queryset = BlogPost.objects.filter(reports__isnull=False, reports__reviewed=False)
+    queryset = BlogPost.objects.filter(reports__isnull=False, reports__reviewed=False).\
+        prefetch_related('category', 'author')
     template_name = "interaction/reported_posts_list.html"
 
     def get_context_data(self, *args, **kwargs):

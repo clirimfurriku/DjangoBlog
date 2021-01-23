@@ -8,7 +8,7 @@ from blog.models import BlogPost, UserComment, UserModel
 
 class BlogPostsView(ListView):
     model = BlogPost
-    queryset = BlogPost.objects.filter(banned=False)
+    queryset = BlogPost.objects.filter(banned=False).prefetch_related('category__parent', 'author')
     paginate_by = 6
 
     def get_context_data(self, **kwargs):
@@ -46,7 +46,7 @@ class AuthorPostsView(DetailView):
 
 class BlogPostDetailView(DetailView):
     model = BlogPost
-    queryset = BlogPost.objects.filter(banned=False)
+    queryset = BlogPost.objects.filter(banned=False).select_related('author').prefetch_related('author', 'likes')
 
     def post(self, request, *args, **kwargs):
         """

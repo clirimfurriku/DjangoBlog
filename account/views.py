@@ -12,6 +12,7 @@ from account.forms import SignUpForm
 
 class MyAccount(DetailView):
     model = UserModel
+    queryset = UserModel.objects.prefetch_related('posts__blog_post__category')
 
     def get_object(self, queryset=None):
         if not self.request.user.is_authenticated:
