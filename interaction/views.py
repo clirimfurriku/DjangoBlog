@@ -62,7 +62,11 @@ def process_ban_request(request, obj: Union[Type[BlogPost], Type[UserComment]], 
     """
     # if user is not authenticated or the method is not PUT
     # or the user is not staff member raise a Http404 error
-    if not request.user.is_authenticated or not request.method == "PUT" or not request.user.is_staff:
+    if (
+        not request.user.is_authenticated
+        or request.method != "PUT"
+        or not request.user.is_staff
+    ):
         raise Http404()
 
     # if the database object does not exist raise Http404 error
@@ -125,7 +129,7 @@ class ReportedPosts(ListView):
 
     def get_context_data(self, *args, **kwargs):
         # Restrict page only to staff users
-        if not (self.request.user.is_authenticated or self.request.user.is_staff):
+        if not self.request.user.is_authenticated or not self.request.user.is_staff:
             raise Http404()
         return super().get_context_data(*args, **kwargs)
 
@@ -136,6 +140,6 @@ class ReportedComments(ListView):
 
     def get_context_data(self, *args, **kwargs):
         # Restrict page only to staff users
-        if not (self.request.user.is_authenticated or self.request.user.is_staff):
+        if not self.request.user.is_authenticated or not self.request.user.is_staff:
             raise Http404()
         return super().get_context_data(*args, **kwargs)
