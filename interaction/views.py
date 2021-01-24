@@ -12,7 +12,7 @@ from blog.models import BlogPost, UserComment
 def process_like_request(request, obj: Union[Type[BlogPost], Type[UserComment]], obj_id) -> JsonResponse:
     # if user is not authenticated or the method is not PUT
     # raise a Http404 error
-    if not (request.user.is_authenticated or request.method == "PUT"):
+    if not request.user.is_authenticated or not request.method == "PUT":
         raise Http404()
 
     # if the database object does not exist raise Http404 error
@@ -34,7 +34,7 @@ def process_like_request(request, obj: Union[Type[BlogPost], Type[UserComment]],
 def process_report_request(request, obj: Union[Type[BlogPost], Type[UserComment]], obj_id) -> JsonResponse:
     # if user is not authenticated or the method is not PUT
     # raise a Http404 error
-    if not (request.user.is_authenticated or request.method == "PUT"):
+    if not request.user.is_authenticated or not request.method == "PUT":
         raise Http404()
 
     # if the database object does not exist raise Http404 error
@@ -62,7 +62,7 @@ def process_ban_request(request, obj: Union[Type[BlogPost], Type[UserComment]], 
     """
     # if user is not authenticated or the method is not PUT
     # or the user is not staff member raise a Http404 error
-    if not (request.user.is_authenticated or request.method == "PUT" or request.user.is_staff):
+    if not request.user.is_authenticated or not request.method == "PUT" or not request.user.is_staff:
         raise Http404()
 
     # if the database object does not exist raise Http404 error
