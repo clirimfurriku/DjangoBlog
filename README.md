@@ -27,6 +27,31 @@ Migrate the database
 ```shell
 python manage.py migrate
 ```
-___
 
-TODO: Add sample data to import on setup
+## Included data
+
+---
+
+### What is included 
+- Sample posts
+- A banned post
+- Sample categories
+- Sample comments on posts
+- Admin account 
+``username: admin
+  password: 123456``
+- User account 
+``username: reader
+  password: ReaderDemoPassword132``
+
+
+### How to import the included data:
+Run this command to add the data to the database
+```shell
+python manage.py loaddata to_import.json
+```
+
+Start the server
+```shell
+python manage.py runserver
+```
