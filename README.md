@@ -55,3 +55,13 @@ Start the server
 ```shell
 python manage.py runserver
 ```
+
+
+## How to run tests
+
+---
+
+To run tests run the command below
+```shell
+python maanage.py test
+```
