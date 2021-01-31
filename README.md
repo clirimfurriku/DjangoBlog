@@ -63,5 +63,5 @@ python manage.py runserver
 
 To run tests run the command below
 ```shell
-python maanage.py test
+python manage.py test
 ```
