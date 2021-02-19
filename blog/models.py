@@ -37,11 +37,11 @@ class BlogPost(models.Model):
 
     @property
     def like_count(self):
-        return len(self.likes.all())
+        return self.likes.count()
 
     @property
     def report_count(self):
-        return len(self.reports.all())
+        return self.reports.count()
 
     def __str__(self):
         return f'{self.title} {self.updated_date}'
@@ -71,11 +71,11 @@ class UserComment(models.Model):
 
     @property
     def like_count(self):
-        return len(self.likes.all())
+        return self.likes.count()
 
     @property
     def report_count(self):
-        return len(self.reports.all())
+        return self.reports.count()
 
     def __str__(self):
         return f'{self.author} {self.comment_date}'
