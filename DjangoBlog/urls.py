@@ -1,4 +1,3 @@
-import debug_toolbar
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
@@ -15,8 +14,11 @@ urlpatterns = [
     path('account/', include(account_urls)),
     path('category/', include(category_urls)),
     path('action/', include(interaction_urls)),
-    path('__debug__/', include(debug_toolbar.urls)),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns.append(path('__debug__/', include(debug_toolbar.urls))),
 
 # Add static and media files to site URLs
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT) \
